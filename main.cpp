@@ -5,61 +5,88 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <unordered_map>
+#include <list>
 
-void readFile();
-void parseFile();
+std::string readFile(std::string fileName);
+void parseFile(const std::string& fileName, std::istream& file, std::unordered_map<std::string, std::list<std::string>>& indexMap);
 
-int dal = 5;
+int main()
+{
+    // map for indexing
+    std::unordered_map<std::string, std::list<std::string>> indexMap;
+    std::list<std::string> files;
 
-int main() {
-    std::cout << "Test init" << "\n";
+    // test
+    files.insert(files.end(), {"doc1.txt", "doc2.txt", "doc3.txt"});
 
-    // readFile();
-    parseFile();
+    // iterate through all files
+    for (const std::string file : files) {
+        std::string content = readFile(file);
 
-    std::cout << dal;
+        // only parse if file is not empty
+        if (!content.empty()) {
+            std::stringstream ss(content);
+            
+            parseFile(file, ss, indexMap);
+        }
+    }
+
+    // TEST
+    for (const auto& pair : indexMap) {
+        std::cout << "Word: " << pair.first << " exists in files:" << "\n";
+
+        for (const std::string& fileName : pair.second) {
+            std::cout << "[" << fileName << "] " << "\n";
+        }
+    }
+    // done
+    std::cout << "Indexing complete" << std::endl;
+
     return 0;
 }
 
 // todo:
 
 // Read files
-void readFile() {
-    // read file
-    std::ifstream myFile ("doc1.txt");
+std::string readFile(std::string fileName)
+{
+    std::ifstream file(fileName.c_str());
 
     // check if file is open
-    if (!myFile.is_open()) {
-        std::cout << "Something went wrong!" << "\n";
-        return;
+    if (!file.is_open())
+    {
+        std::cerr << "Something went wrong!" << "\n";
+        return "";
     }
 
     std::string line;
     std::cout << "Reading file" << "\n";
 
-    while(std::getline(myFile, line)) {
-        std::cerr << line << "\n";
-    }
+    std::stringstream fileContent;
+    fileContent << file.rdbuf();
 
     // close file
-    myFile.close();
+    file.close();
 
+    return fileContent.str();
 }
 
-void parseFile() {
-    std::fstream file("doc2.txt");
+void parseFile(const std::string& fileName, std::istream& file, std::unordered_map<std::string, std::list<std::string>>& indexMap)
+{
+   std::string word;
 
-    std::string line;
+    // iterate through every word
+    while (file >> word)
+    {
+        // we take the value for this key (word)
+        std::list<std::string>& fileList = indexMap[word];
 
-    std::stringstream ss;
-    ss << file.rdbuf();
-
-    std::string buffer = ss.str();
-
-    std::cout << buffer << std::endl;
-
-
-
+        // check if list is empty or the file already exists for this word in indexMap
+        if (fileList.empty() || fileList.back() != fileName) {
+            fileList.push_back(fileName);
+        }
+    }
 }
 
 // Indexing (for searching)
