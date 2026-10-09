@@ -4,6 +4,8 @@
 #include "indexer.h"
 #include <fstream>
 #include <sstream>
+#include <cctype>
+#include <algorithm>
 
 // todo:
 
@@ -38,8 +40,11 @@ void parseFile(const std::string& fileName, std::istream& file, std::unordered_m
     // iterate through every word
     while (file >> word)
     {
+        std::string lowerCaseWord = toLowerCase(word);
+        std::string cleansedWord = cleanString(lowerCaseWord);
+
         // we take the value for this key (word)
-        std::list<std::string>& fileList = indexMap[word];
+        std::list<std::string>& fileList = indexMap[cleansedWord];
 
         // check if list is empty or the file already exists for this word in indexMap
         if (fileList.empty() || fileList.back() != fileName) {
@@ -48,6 +53,21 @@ void parseFile(const std::string& fileName, std::istream& file, std::unordered_m
     }
 }
 
-// Indexing (for searching)
+std::string toLowerCase(std::string str) {
+    for (char& c : str) {
+        c = std::tolower(static_cast<unsigned char>(c));
+    }
 
-// searching
+    return str;
+}
+
+std::string cleanString(std::string &str) {
+    // characters that should be removed from the string
+    char toRemove[] {"\",."};
+
+    for (unsigned int i = 0; i < strlen(toRemove); ++i) {
+        str.erase(remove(str.begin(), str.end(), toRemove[i]));
+    }
+
+    return str;
+}

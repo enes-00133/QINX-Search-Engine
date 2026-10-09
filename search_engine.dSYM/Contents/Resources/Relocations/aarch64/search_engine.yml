@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/enessen/Documents/Search Engine C++/search_engine'
+relocations:     []
+...

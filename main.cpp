@@ -10,9 +10,11 @@ int main() {
     std::unordered_map<std::string, std::list<std::string>> indexMap;
     std::list<std::string> files;
 
+    
     // test
     files.insert(files.end(), {"doc1.txt", "doc2.txt", "doc3.txt"});
 
+    
     // iterate through all files
     for (const std::string file : files) {
         std::string content = readFile(file);
@@ -25,6 +27,7 @@ int main() {
         }
     }
 
+    /*
     // TEST
     for (const auto& pair : indexMap) {
         std::cout << "Word: " << pair.first << " exists in files:" << "\n";
@@ -35,6 +38,40 @@ int main() {
     }
     // done
     std::cout << "Indexing complete" << std::endl;
+    */
 
-    return 0;
+    // CLI
+    std::string searchQuery;
+
+    std::cout << "========Search for an entry in files========" << "\n";
+
+    while (true) {
+        // input
+        std::cout << ">";
+        std::cin >> searchQuery;
+
+        if (searchQuery == "exit") {
+            std::cout << "Ending search";
+            break;
+        }
+
+        std::string lowerCaseWord = toLowerCase(searchQuery);
+
+        auto it = indexMap.find(lowerCaseWord);
+
+        // word found
+        if (it != indexMap.end()) {
+            
+            std::cout << "Entry found in files:" << "\n";
+            for (const std::string& fileName : it -> second) {
+                std::cout << "[" << fileName << "]" << "\n";
+            }
+            
+        }
+
+        // no entry found
+        else {
+            std::cout << ">> No files found for this entry: " << "\"" << searchQuery << "\"" << "\n";
+        }
+    }
 }
