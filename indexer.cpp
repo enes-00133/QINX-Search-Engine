@@ -9,7 +9,11 @@
 
 // todo:
 
-// Read files
+/* 
+    Takes a filename as parameter. Adds the file to the lists of files.
+    Returns an error if file couldn't be opened.
+    Returns the content of the file as string.
+*/
 std::string readFile(std::string fileName)
 {
     std::ifstream file(fileName.c_str());
@@ -33,12 +37,15 @@ std::string readFile(std::string fileName)
     return fileContent.str();
 }
 
-void parseFile(const std::string& fileName, std::istream& file, std::unordered_map<std::string, std::list<std::string>>& indexMap)
+/*
+    Parses the file. Maps each word in the file to the corresponding file(s) 
+*/
+void parseFile(const std::string& fileName, std::istream& fileContent, std::unordered_map<std::string, std::list<std::string>>& indexMap)
 {
    std::string word;
 
     // iterate through every word
-    while (file >> word)
+    while (fileContent >> word)
     {
         std::string lowerCaseWord = toLowerCase(word);
         std::string cleansedWord = cleanString(lowerCaseWord);
@@ -53,6 +60,9 @@ void parseFile(const std::string& fileName, std::istream& file, std::unordered_m
     }
 }
 
+/*
+Turns a string into lowercase
+*/
 std::string toLowerCase(std::string str) {
     for (char& c : str) {
         c = std::tolower(static_cast<unsigned char>(c));
@@ -61,6 +71,9 @@ std::string toLowerCase(std::string str) {
     return str;
 }
 
+/*
+Removes certain characters from the string
+*/
 std::string cleanString(std::string &str) {
     // characters that should be removed from the string
     char toRemove[] {"\",."};

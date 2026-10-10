@@ -46,6 +46,8 @@ int main() {
     std::cout << "========Search for an entry in files========" << "\n";
 
     while (true) {
+
+        
         // input
         std::cout << ">";
         std::cin >> searchQuery;

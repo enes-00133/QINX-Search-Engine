@@ -2,17 +2,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C++ Debugger (Suchmaschine)",
+            "name": "C++ Debugger (Tests)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/search_engine",
+            "program": "${workspaceFolder}/run_tests",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "C/C++: g++ Alle Dateien kompilieren"
+            "preLaunchTask": "C/C++: Tests kompilieren und ausführen"
         }
     ]
 }
