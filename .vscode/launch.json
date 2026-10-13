@@ -2,17 +2,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C++ Debugger (Tests)",
+            "name": "Search Engine: Debug App",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/run_tests",
+            "program": "${workspaceFolder}/.build/search_engine",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "C/C++: Tests kompilieren und ausführen"
+            "preLaunchTask": "Build application"
+        },
+        {
+            "name": "Search Engine: Debug Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/.build/run_tests",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tests",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Build tests"
         }
     ]
 }

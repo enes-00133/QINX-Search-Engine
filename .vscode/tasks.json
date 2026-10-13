@@ -1,46 +1,80 @@
 {
+    "version": "2.0.0",
     "tasks": [
         {
+            "label": "Prepare build directory",
             "type": "shell",
-            "label": "C/C++: App kompilieren",
-            "command": "/usr/bin/g++",
+            "command": "mkdir",
             "args": [
-                "-std=c++17",
-                "-fdiagnostics-color=always",
-                "-g",
-                "${workspaceFolder}/main.cpp",
-                "${workspaceFolder}/indexer.cpp",
-                "-o",
-                "${workspaceFolder}/search_engine"
+                "-p",
+                "${workspaceFolder}/.build"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": ["$gcc"],
-            "group": "build"
+            "problemMatcher": []
         },
         {
-            "type": "shell",
-            "label": "C/C++: Tests kompilieren und ausführen",
-            "command": "/usr/bin/g++",
+            "label": "Build application",
+            "type": "process",
+            "command": "/usr/bin/clang++",
             "args": [
                 "-std=c++17",
-                "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}/test.cpp",
+                "-O0",
+                "-Wall",
+                "-Wextra",
+                "-pedantic",
+                "${workspaceFolder}/main.cpp",
                 "${workspaceFolder}/indexer.cpp",
+                "${workspaceFolder}/file_manager.cpp",
+                "${workspaceFolder}/cli.cpp",
                 "-o",
-                "${workspaceFolder}/run_tests"
+                "${workspaceFolder}/.build/search_engine"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": ["$gcc"],
+            "dependsOn": "Prepare build directory",
+            "dependsOrder": "sequence",
+            "problemMatcher": "$gcc",
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Build tests",
+            "type": "process",
+            "command": "/usr/bin/clang++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "-O0",
+                "-Wall",
+                "-Wextra",
+                "-pedantic",
+                "-I",
+                "${workspaceFolder}",
+                "${workspaceFolder}/tests/test.cpp",
+                "${workspaceFolder}/indexer.cpp",
+                "-o",
+                "${workspaceFolder}/.build/run_tests"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/tests"
+            },
+            "dependsOn": "Prepare build directory",
+            "dependsOrder": "sequence",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Run tests",
+            "type": "process",
+            "command": "${workspaceFolder}/.build/run_tests",
+            "dependsOn": "Build tests",
+            "dependsOrder": "sequence",
+            "options": {
+                "cwd": "${workspaceFolder}/tests"
+            },
+            "problemMatcher": []
         }
-    ],
-    "version": "2.0.0"
+    ]
 }

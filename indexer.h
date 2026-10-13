@@ -10,3 +10,4 @@ std::string readFile(std::string fileName);
 void parseFile(const std::string& fileName, std::istream& fileContent, std::unordered_map<std::string, std::list<std::string>>& indexMap);
 std::string toLowerCase(std::string str);
 std::string cleanString(std::string &str);
+void addToFileList(std::list<std::string> &fileList, const std::string fileName);

@@ -14,6 +14,7 @@
     Returns an error if file couldn't be opened.
     Returns the content of the file as string.
 */
+
 std::string readFile(std::string fileName)
 {
     std::ifstream file(fileName.c_str());
@@ -58,6 +59,11 @@ void parseFile(const std::string& fileName, std::istream& fileContent, std::unor
             fileList.push_back(fileName);
         }
     }
+}
+
+void addToFileList(std::list<std::string> &fileList, const std::string fileName) {
+    fileList.push_back(fileName);
+
 }
 
 /*
