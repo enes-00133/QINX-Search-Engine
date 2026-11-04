@@ -1,1 +1,10 @@
 .build/
+
+# macOS
+.DS_Store
+*.dSYM/
+
+# Build
+.build/
+build/
+
