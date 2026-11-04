@@ -5,8 +5,10 @@
 enum InputCommand {
     HELP,
     EXIT,
+    PATH,
     VERSION,
-    SEARCH
+    SEARCH,
+    UNDEFINED
 };
 
 void greetUser();

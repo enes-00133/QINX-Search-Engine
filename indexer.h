@@ -11,3 +11,4 @@ void parseFile(const std::string& fileName, std::istream& fileContent, std::unor
 std::string toLowerCase(std::string str);
 std::string cleanString(std::string &str);
 void addToFileList(std::list<std::string> &fileList, const std::string fileName);
+std::list<std::string> searchFiles(const std::string &searchQuery, std::unordered_map<std::string, std::list<std::string>> indexMap);

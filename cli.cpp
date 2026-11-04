@@ -1,6 +1,6 @@
 // cli.cpp
 // manages the user interface for the CLI
-// Enes Sen
+// name
 
 #include "cli.h"
 #include "indexer.h"
@@ -30,6 +30,7 @@ void greetUser() {
 }
 
 InputCommand commandHandler (std::string command) {
+    
     InputCommand userCommand;
 
     std::string commandLower = toLowerCase(command);
@@ -44,6 +45,13 @@ InputCommand commandHandler (std::string command) {
     }
     else if (commandLower == "search") {
         userCommand = SEARCH;
+    }
+    else if (commandLower == "path") {
+        userCommand = PATH;
+    }
+    // if its an unknwon command, return undefined
+    else {
+        userCommand = UNDEFINED;
     }
 
     return userCommand;

@@ -53,7 +53,7 @@
                 "-pedantic",
                 "-I",
                 "${workspaceFolder}",
-                "${workspaceFolder}/tests/test.cpp",
+                "${workspaceFolder}/tests/testIndexer.cpp",
                 "${workspaceFolder}/indexer.cpp",
                 "-o",
                 "${workspaceFolder}/.build/run_tests"
